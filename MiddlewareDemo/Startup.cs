@@ -24,7 +24,16 @@ namespace MiddlewareDemo
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseStatusCodePages();
+            #region 状态码中间件
+            //状态码中间件(如果访问的页面不存在的话,返回404状态码)
+            //app.UseStatusCodePages("text/html","<h1>statuscode:{0}</h1>"); 
+            //如果访问的页面不存在,则跳转到StatusCodePagesWithRedirects(先返回302，再去请求返回200)
+            //app.UseStatusCodePagesWithRedirects("/ErrorPages/{0}");
+            //如果访问的页面不存在,则跳转到/Home/ErrorPage(直接返回404状态码加页面)
+            app.UseStatusCodePagesWithReExecute("/Home/ErrorPage","?code={0}");
+            #endregion
+
+
             //中间件1
             app.Use(async (context, next) =>
             {
@@ -36,6 +45,14 @@ namespace MiddlewareDemo
                 //第五步
                 //await context.Response.WriteAsync("Middleware1 end\r\n");
                 logger.LogInformation("Middleware1 end\r\n");
+            });
+
+            app.Map("/middleware", builder => 
+            {
+                builder.Run(async (context) =>
+                {
+                    await context.Response.WriteAsync("我是中间件终端(middleware)");
+                });
             });
 
             //自定义中间件
