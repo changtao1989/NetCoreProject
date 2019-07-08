@@ -28,9 +28,7 @@ namespace MiddlewareDemo.Middlewares
                 await request.Body.ReadAsync(buffer, 0, buffer.Length);
                 var bodyString = Encoding.UTF8.GetString(buffer);
                 this._logger.LogInformation($"Protocal:{request.Protocol},Host:{request.Host},Path:{request.Path}");
-                // await this._next(context);
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync("{a:1}");
+                 await this._next(context);
             }
             else
             {
