@@ -19,7 +19,7 @@ namespace MiddlewareDemo.Middlewares
             this._logger = logger;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
             if(context.Request.Method == HttpMethods.Post)
             {
@@ -28,7 +28,13 @@ namespace MiddlewareDemo.Middlewares
                 await request.Body.ReadAsync(buffer, 0, buffer.Length);
                 var bodyString = Encoding.UTF8.GetString(buffer);
                 this._logger.LogInformation($"Protocal:{request.Protocol},Host:{request.Host},Path:{request.Path}");
-                await this._next(context);
+                // await this._next(context);
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync("{a:1}");
+            }
+            else
+            {
+               await this._next(context);
             }
         }
     }
