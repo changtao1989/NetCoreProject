@@ -14,6 +14,7 @@ namespace NetCoreProject
        
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -22,11 +23,17 @@ namespace NetCoreProject
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.Run(async (context) =>
+            else
             {
-                await context.Response.WriteAsync("Hello World!");
-            });
+                app.UseExceptionHandler("/Home/Error");
+            }
+            //在launchSettings.json里配置了环境变量，可以通过IsEnvironment方法调用
+            if (env.IsEnvironment("UAT"))
+            {
+
+            }
+
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

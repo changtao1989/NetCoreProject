@@ -19,6 +19,10 @@ namespace NetCoreProject
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((context, builder) => 
+                {
+                    builder.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json");
+                })
                 .UseStartup<Startup>();
     }
 }
