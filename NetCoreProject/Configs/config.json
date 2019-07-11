@@ -1,0 +1,12 @@
+{
+  "Key": "asp.net core",
+  "ASP.NET": {
+    "Name1": "ASP.NET MVC",
+    "Name2": "ASP.NET Core MVC",
+    "Name3": "ASP.NET WebForms"
+  },
+  "Person": {
+    "Name": "changfutao111",
+    "Age": 18
+  }
+}
