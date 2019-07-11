@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreProject.Models;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 namespace NetCoreProject
 {
     public class Startup
@@ -21,6 +21,7 @@ namespace NetCoreProject
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Configuration操作
             //从Configs读取config.json文件的内容,绑定对象Person
             Person p = new Person();
             this.Configuration.Bind("Person", p);
@@ -29,6 +30,22 @@ namespace NetCoreProject
 
             //配置热更新
             services.Configure<Person>(Configuration.GetSection("Person"));
+            #endregion
+
+            #region Cookie操作
+            services.Configure<CookiePolicyOptions>(options => {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            #endregion
+
+            #region Cookie身份认证
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(options => 
+                    {
+                        options.LoginPath = "/Account/Login";
+                    });
+            #endregion
 
             //在ASP.NET Core2.2中使用最新路由方案，需要为MVC服务注册指定兼容性版本
             services.AddMvc()
@@ -50,6 +67,9 @@ namespace NetCoreProject
             {
 
             }
+
+            //添加身份认证中间件
+            app.UseAuthentication();
 
             //默认路由模板
             app.UseMvc(routes => 
