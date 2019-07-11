@@ -14,7 +14,9 @@ namespace NetCoreProject
        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            //在ASP.NET Core2.2中使用最新路由方案，需要为MVC服务注册指定兼容性版本
+            services.AddMvc()
+                    .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
