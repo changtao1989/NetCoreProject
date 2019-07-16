@@ -17,5 +17,10 @@ namespace NetCoreProject.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public string Article()
+        {
+            return "Article";
+        }
     }
 }

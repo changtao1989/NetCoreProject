@@ -1,0 +1,49 @@
+{
+	"token": "777CBAABFCBB4B61A8DF4CAEDD23E777",
+	"data": {
+		"DocType": "APS_202",
+		"SerType": "Add",
+		"dataJson": {
+			"OrderType": "1",
+			"U_SysNum": "DD85769",
+			"SODocNum": "sys85691_5",
+			"StyleCode": "ks1917521",
+			"ColorCode": "蓝色",
+			"SizeCode": "XL",
+			"PlanQty": 47,
+			"Price": 0.0,
+			"PlanNum": "DH19060009",
+			"CardCode": "1",
+			"DocDate": "2019-06-25",
+			"DocDueDate": "2019-06-25",
+			"ShipDate": "2019-06-27",
+			"Planner": "APS",
+			"CJDate": "2019-06-25",
+			"FZDate": "2019-06-26",
+			"ZTDate": "2019-06-26",
+			"BZDate": "2019-06-26",
+			"Comment": "123123",
+			"Lines": [{
+				"ItemCode": "deffr45899",
+				"Quantity": 367.54,
+				"WhsCode": "G001"
+			}, {
+				"ItemCode": "纱线sku1",
+				"Quantity": 531.10,
+				"WhsCode": "G001"
+			}, {
+				"ItemCode": "ybkstestYE2002布料公司",
+				"Quantity": 408.9,
+				"WhsCode": "G001"
+			}, {
+				"ItemCode": "ybkstest2YE3236布料公司",
+				"Quantity": 455.9,
+				"WhsCode": "G001"
+			}, {
+				"ItemCode": "ybkstestKQ412568布料公司",
+				"Quantity": 361.9,
+				"WhsCode": "G001"
+			}]
+		}
+	}
+}

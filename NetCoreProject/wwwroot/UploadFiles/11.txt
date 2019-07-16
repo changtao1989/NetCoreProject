@@ -1,0 +1,36 @@
+SELECT 
+	   t1.ID,  --planmid
+	   t3.SCZSBH,  --计划编号
+       t3.SCGCDM,  --工厂编号
+       t3.SCXDRQ,  --下达日期
+       t3.SCCJJQ,  --裁剪交期
+       t3.SCJHRY,  --计划人员
+       t3.SCZSBZ,  --计划备注
+       t1.Scggdh,  --生产订单号
+       t1.SonScggdh,  --子生产订单号
+       t4.khdh,  --客户单号
+       t2.SCZSSL,  --数量
+       t3.SCTCRQ,  --投产日期
+       t4.customername,  --客户姓名
+       t3.SCFZJQ,  --缝制交期
+       t3.SCZTJQ,  --整烫交期
+       t3.SCBZJQ,  --包装交期
+       t3.SCJHRQ,  --计划交期
+       t4.jhrq,  --订单交货日期
+	   t5.CutNum,  --裁床号
+	   t5.CutTime, --裁剪时间
+	   t4.orderType, --订单类型 D定制 S 大货
+	   t6.WLBM --物料编码
+FROM dbo.T_TSData AS t1
+    INNER JOIN SCT27 AS t2
+        ON t2.SCGGDH = t1.Scggdh
+           AND t1.SonScggdh = t2.SONSCGGDH
+    INNER JOIN SCT26 AS t3
+        ON t3.SCZSBH = t2.SCZSBH
+    INNER JOIN dbo.T_BLData_Order AS t4
+        ON t4.SCGGDH = t1.Scggdh
+	LEFT JOIN dbo.T_Analysis_OutputListByCJ AS t5
+		ON t5.Scggdh = t1.Scggdh AND t5.SonScggdh = t1.SonScggdh
+	LEFT JOIN dbo.T_BLData_PLD AS t6
+		ON t6.SCGGDH = t1.Scggdh 
+	WHERE t6.IsMain=1 

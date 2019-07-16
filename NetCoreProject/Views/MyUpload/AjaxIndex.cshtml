@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AjaxIndex</title>
+</head>
+<body>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10">
+                <p>使用表单上传多个文件</p>
+                <input type="file" id="files" name="files" multiple />
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="button" id="upload" class="btn btn-success" style="cursor:pointer;width:100px;" value="上传" />
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#upload").click(function (evt) {
+                var fileUpload = $("#files").get(0);
+                var files = fileUpload.files;
+                var data = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    data.append(files[i].name, files[i]);
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/MyUpload/UploadFileByAjax",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (message) {
+                        alert(message);
+                    },
+                    error: function () {
+                        alert("上传文件出现错误！");
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

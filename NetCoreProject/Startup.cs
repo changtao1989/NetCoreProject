@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreProject.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Features;
+
 namespace NetCoreProject
 {
     public class Startup
@@ -47,6 +49,13 @@ namespace NetCoreProject
                     });
             #endregion
 
+            #region 文件上传
+            services.Configure<FormOptions>(options =>
+               {
+                   options.MemoryBufferThreshold = Int32.MaxValue;
+               }); 
+            #endregion
+
             //在ASP.NET Core2.2中使用最新路由方案，需要为MVC服务注册指定兼容性版本
             services.AddMvc()
                     .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
@@ -68,12 +77,21 @@ namespace NetCoreProject
 
             }
 
+            //静态文件中间件
+            app.UseStaticFiles();
+
             //添加身份认证中间件
             app.UseAuthentication();
 
             //默认路由模板
             app.UseMvc(routes => 
             {
+                routes.MapRoute(
+                    name:"blog",
+                    template: "MyRoute/{*article}",
+                    defaults:new {controller= "MyRoute", action="Article"}
+                    );
+
                 routes.MapRoute(
                     name:"default",
                     template:"{controller}/{action}/{id?}"
